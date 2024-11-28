@@ -1,11 +1,14 @@
 //const redis = require('redis');
 //import { Schema, Repository } from 'redis-om';
+import { createClient } from 'redis'
 
 (async () => {
-  const { Schema, Client  } = await import('redis-om');
-
-  const client = new Client();
-  await client.open('redis://redis:6379')
+  //const { Schema, Client  } = await import('redis-om');
+  const { Repository, Schema } = require('redis-om');
+  
+  const redis = createClient({
+      url: 'redis://redis:6379'
+  })
 
   const posSchema = new Schema('Position',{
     "patente": { type: 'string'},
@@ -28,9 +31,7 @@
     dataStructure: 'HASH'
   })
 
-  const posRepository = client.fetchRepository(posSchema);
+  const posRepository = new Repository(posSchema, redis)
 
-  await userRepository.createIndex();
-
-  module.exports = {client, posRepository};
+  module.exports = {posRepository};
 })();
