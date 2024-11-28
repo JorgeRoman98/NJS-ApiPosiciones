@@ -1,16 +1,15 @@
 //const redis = require('redis');
 //import { Schema, Repository } from 'redis-om';
 import { createClient } from 'redis'
+import { Repository, Schema } from 'redis-om';
 
-(async () => {
+//(async () => {
   //const { Schema, Client  } = await import('redis-om');
-  const { Repository, Schema } = require('redis-om');
-  
-  const redis = createClient({
-      url: 'redis://redis:6379'
-  })
+const redis = createClient({
+  url: 'redis://redis:6379'
+})
 
-  const posSchema = new Schema('Position',{
+const posSchema = new Schema('Position',{
     "patente": { type: 'string'},
     "fecha_hora": { type: 'string'},
     "latitud": { type: 'string'},
@@ -31,7 +30,6 @@ import { createClient } from 'redis'
     dataStructure: 'HASH'
   })
 
-  const posRepository = new Repository(posSchema, redis)
-
-  module.exports = {posRepository};
-})();
+const posRepository = new Repository(posSchema, redis)
+export{posRepository};
+//})();
