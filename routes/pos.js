@@ -1,6 +1,16 @@
 // routes/sample.js
 /**
  *  @swagger
+ *  /pos/{mov_codigo}:
+ *  get:
+ *      summary: retorna las posiciones de una patente.
+ *      parameters:
+ *        - in: path
+ *          name: mov_codigo
+ *          schema:
+ *              type: string
+ *          required: true
+ *          descripcion: patente del vehículo a buscar.
  *  /pos/insert:
  *  post:
  *      summary: Returns a sample message
@@ -45,16 +55,6 @@
  *      responses:
  *          200:
  *              description: A successful response
- *  /pos/{mov_codigo}:
- *  get:
- *      summary: retorna las posiciones de una patente.
- *      parameters:
- *        - in: path
- *          name: mov_codigo
- *          schema:
- *              type: string
- *          required: true
- *          descripcion: patente del vehículo a buscar.
  */
 
 const express = require('express');
@@ -71,8 +71,9 @@ const router = express.Router();
 
 const client = createClient({
     legacyMode: false,
-    url: 'redis://redis:6379',
-    //url: 'redis://192.168.2.40:6379',
+    // address: '192.168.2.40', //redisserver
+    // port: 6379,
+    url : 'redis://192.168.2.40:6379',
     socket: {
         connectTimeout: 100000, // Tiempo de espera en milisegundos
     },
@@ -81,6 +82,8 @@ const client = createClient({
 client.on('connect', () => {
     console.log('Conectado a Redis');
 });
+
+
 
 (async () => {
     try {
