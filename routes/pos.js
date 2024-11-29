@@ -48,7 +48,7 @@
  */
 
 const express = require('express');
-const { createClient, ClientClosedError } = require('redis');
+//const { createClient, ClientClosedError } = require('redis');
 
 //import { posRepository } from '../redisOMClient.mjs'
 
@@ -56,13 +56,13 @@ const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
 const router = express.Router();
 
-const client = createClient({
-    legacyMode: false,
-    url : `redis://${redisserv}:6379`,
-    socket: {
-        connectTimeout: 100000, // Tiempo de espera en milisegundos
-    },
-}) 
+// const client = createClient({
+//     legacyMode: false,
+//     url : `redis://${redisserv}:6379`,
+//     socket: {
+//         connectTimeout: 100000, // Tiempo de espera en milisegundos
+//     },
+// }) 
 
 client.on('connect', () => {
     console.log('Conectado a Redis');
