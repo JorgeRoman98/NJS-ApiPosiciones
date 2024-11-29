@@ -58,7 +58,8 @@
  */
 
 const express = require('express');
-// import { posRepository } from '../redisPosition.js';
+//const posRepository = require('../redisPosition.mjs');
+//import { posRepository } from '../redisPosition.mjs';
 // import { createClient } from 'redis'
 
 // const redis = createClient({
@@ -69,6 +70,7 @@ const router = express.Router();
 
 router.post('/insert', async (req, res) => {
     const { EntityId } = await import('redis-om');
+    const { posRepository } = await import('../redisPosition.mjs');
     try{
         const bod = req.body
           

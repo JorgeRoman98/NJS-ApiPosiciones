@@ -9,7 +9,7 @@ app.use(express.json())
 
 app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use('/pos', require('./routes/pos'))
+app.use('/pos', require('./routes/pos.js'))
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
