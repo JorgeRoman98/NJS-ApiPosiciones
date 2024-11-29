@@ -2,11 +2,18 @@ import { createClient } from 'redis'
 import { Repository, Schema } from 'redis-om';
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
-const redis = createClient({
+const client = createClient({
+  legacyMode: false,
   url : `redis://${redisserv}:6379`,
+  socket: {
+      connectTimeout: 100000, // Tiempo de espera en milisegundos
+  },
 })
 
-const posSchema = new Schema('Position',{
+let posRepository;
+
+client.connect().then(() => {
+  const posSchema = new Schema('Position',{
     "patente": { type: 'string'},
     "fecha_hora": { type: 'string'},
     "latitud": { type: 'string'},
@@ -27,5 +34,9 @@ const posSchema = new Schema('Position',{
     dataStructure: 'HASH'
   })
 
-const posRepository = new Repository(posSchema, redis)
+  posRepository = new Repository(posSchema, redis)
+})
+
+
+
 export{ posRepository };
