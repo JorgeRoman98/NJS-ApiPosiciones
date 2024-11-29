@@ -49,21 +49,14 @@
 
 const express = require('express');
 const { createClient } = require('redis');
-//const posRepository = require('../redisPosition.mjs');
-//import { posRepository } from '../redisPosition.mjs';
-// import { createClient } from 'redis'
 
-// const redis = createClient({
-//     url: 'redis://redis:6379'
-//   })  
+const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
 const router = express.Router();
 
 const client = createClient({
     legacyMode: false,
-    // address: '192.168.2.40', //redisserver
-    // port: 6379,
-    url : 'redis://192.168.2.40:6379',
+    url : `redis://${redisserv}:6379`,
     socket: {
         connectTimeout: 100000, // Tiempo de espera en milisegundos
     },
@@ -74,17 +67,17 @@ client.on('connect', () => {
 });
 
 
-
-(async () => {
-    try {
-        await client.connect();
-    } catch (err) {
-        console.error('Error al conectar:', err);
-    }
-})();
+// (async () => {
+//     try {
+//         await client.connect();
+//     } catch (err) {
+//         console.error('Error al conectar:', err);
+//     }
+// })();
 
 router.post('/insert', async (req, res) => {
     try{
+        await client.connect();
         const { EntityId } = await import('redis-om');
         const { posRepository } = await import('../redisPosition.mjs');
         

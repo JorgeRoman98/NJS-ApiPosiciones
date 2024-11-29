@@ -1,8 +1,9 @@
 import { createClient } from 'redis'
 import { Repository, Schema } from 'redis-om';
+const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
 const redis = createClient({
-  url: 'redis://redis:6379'
+  url : `redis://${redisserv}:6379`,
 })
 
 const posSchema = new Schema('Position',{
