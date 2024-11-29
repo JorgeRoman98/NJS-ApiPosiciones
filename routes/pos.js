@@ -77,15 +77,18 @@ client.on('connect', () => {
 
 router.post('/insert', async (req, res) => {
     try{
-        await client.connect();
-        const { EntityId } = await import('redis-om');
-        const { posRepository } = await import('../redisPosition.mjs');
+        //await client.connect();
+        client.connect().then(() => {
+            const { EntityId } = import('redis-om');
+            const { posRepository } = import('../redisPosition.mjs');
+            
+            console.log('Conectado a Redis');
+            const bod = req.body
+            
+            album = posRepository.save(bod)
+            res.json({ message: 'Posición creada', Id: album[EntityId] });
+          })
         
-        console.log('Conectado a Redis');
-        const bod = req.body
-          
-        album = await posRepository.save(bod)
-        res.json({ message: 'Posición creada', Id: album[EntityId] });
         await client.quit();
     }catch(error){
         console.error('Error al crear usuario:', error);
