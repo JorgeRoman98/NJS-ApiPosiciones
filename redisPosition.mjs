@@ -1,4 +1,3 @@
-//import { createClient } from 'redis'
 import { Entity, Schema } from 'redis-om'
 import client from './redisOMClient.mjs'
 
