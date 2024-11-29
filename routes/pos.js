@@ -87,4 +87,4 @@ router.get('/:mov_codigo', async (req,res) => {
     res.json({ resp: redis_resp })
 })
 
-module.export = router;
+module.exports = router;
