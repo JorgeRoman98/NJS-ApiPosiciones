@@ -1,10 +1,6 @@
-//const redis = require('redis');
-//import { Schema, Repository } from 'redis-om';
 import { createClient } from 'redis'
 import { Repository, Schema } from 'redis-om';
 
-//(async () => {
-  //const { Schema, Client  } = await import('redis-om');
 const redis = createClient({
   url: 'redis://redis:6379'
 })
@@ -31,5 +27,4 @@ const posSchema = new Schema('Position',{
   })
 
 const posRepository = new Repository(posSchema, redis)
-export{posRepository};
-//})();
+export{ posRepository };

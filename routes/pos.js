@@ -56,21 +56,18 @@
  *          required: true
  *          descripcion: patente del vehículo a buscar.
  */
-//const express = require('express');
-//const {posRepository} = require('../redisPosition.js');
-//import { createClient } from 'redis'
-import * as express from "express";
-import { posRepository } from '../redisPosition.js';
-import { createClient } from 'redis'
 
-const redis = createClient({
-    url: 'redis://redis:6379'
-  })  
+const express = require('express');
+// import { posRepository } from '../redisPosition.js';
+// import { createClient } from 'redis'
+
+// const redis = createClient({
+//     url: 'redis://redis:6379'
+//   })  
 
 const router = express.Router();
 
 router.post('/insert', async (req, res) => {
-    //import { EntityId } from 'redis-om'
     const { EntityId } = await import('redis-om');
     try{
         const bod = req.body
@@ -85,10 +82,9 @@ router.post('/insert', async (req, res) => {
 
 router.get('/:mov_codigo', async (req,res) => {
     const mov_codigo = req.params.mov_codigo;
-
     const redis_resp = await posRepository.search().where('patente').equals(mov_codigo);
 
     res.json({ resp: redis_resp })
 })
 
-export{router};
+module.export = router;
