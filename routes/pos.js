@@ -80,8 +80,8 @@ client.on('connect', () => {
 router.post('/insert', async (req, res) => {
     try{
         //await client.connect();
-        const { EntityId } = import('redis-om');
-        const { posRepository } = import('../redisOMClient.mjs');
+        //const { EntityId } = await import('redis-om');
+        const { posRepository } = await import('../redisOMClient.mjs');
             
         console.log('Conectado a Redis');
         const bod = req.body
