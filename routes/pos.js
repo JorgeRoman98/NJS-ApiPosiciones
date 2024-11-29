@@ -105,6 +105,9 @@ router.post('/insert', async (req, res) => {
  *                  type: string
  *              required: true
  *              descripcion: patente del vehículo a buscar.
+ *      responses:
+ *          200:
+ *              description: A successful response
 */
 
 router.get('/:mov_codigo', async (req,res) => {
@@ -119,6 +122,9 @@ router.get('/:mov_codigo', async (req,res) => {
  *      /pos/all:
  *      get:
  *          summary: retorna todas las posiciones.
+ *      responses:
+ *          200:
+ *              description: A successful response
 */
 
 router.get('/all', async (req,res) => {
