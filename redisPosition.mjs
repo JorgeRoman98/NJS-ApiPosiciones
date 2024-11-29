@@ -1,18 +1,11 @@
-import { createClient } from 'redis'
-import { Repository, Schema } from 'redis-om';
-const redisserv = process.env.REDIS_HOST || '192.168.2.40';
+//import { createClient } from 'redis'
+import { Entity, Schema } from 'redis-om'
+import client from './redisOMClient.mjs'
 
-const client = createClient({
-  legacyMode: false,
-  url : `redis://${redisserv}:6379`,
-  socket: {
-      connectTimeout: 100000, // Tiempo de espera en milisegundos
-  },
-})
-
+class Position extends Entity {}
 
 client.connect()
-const posSchema = new Schema('Position',{
+const posSchema = new Schema(Position,{
   "patente": { type: 'string'},
   "fecha_hora": { type: 'string'},
   "latitud": { type: 'string'},
@@ -29,7 +22,7 @@ const posSchema = new Schema('Position',{
   "rut_conductor": { type: 'string'},
   "nombre_conductor": { type: 'string'},
   "opcional_1": { type: 'string'},
-}, {
-  dataStructure: 'HASH'
 })
-export const personRepository = client.fetchRepository(posSchema)
+export const positionRepository = client.fetchRepository(posSchema)
+
+await positionRepository.createIndex()

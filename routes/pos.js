@@ -50,6 +50,8 @@
 const express = require('express');
 const { createClient, ClientClosedError } = require('redis');
 
+//import { posRepository } from '../redisOMClient.mjs'
+
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
 const router = express.Router();
@@ -78,18 +80,15 @@ client.on('connect', () => {
 router.post('/insert', async (req, res) => {
     try{
         //await client.connect();
-        client.connect().then(() => {
-            const { EntityId } = import('redis-om');
-            const { posRepository } = import('../redisPosition.mjs');
+        const { EntityId } = import('redis-om');
+        const { posRepository } = import('../redisOMClient.mjs');
             
-            console.log('Conectado a Redis');
-            const bod = req.body
+        console.log('Conectado a Redis');
+        const bod = req.body
             
-            album = posRepository.save(bod)
-            res.json({ message: 'Posición creada', Id: album[EntityId] });
-          })
-        
-        await client.quit();
+        const position = posRepository.createAndSave(req.body)
+        //res.json({ message: 'Posición creada', Id: album[EntityId] });
+        res.send(position)
     }catch(error){
         console.error('Error al crear usuario:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
