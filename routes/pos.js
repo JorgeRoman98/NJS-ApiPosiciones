@@ -79,12 +79,12 @@ const router = express.Router();
 
 router.post('/insert', async (req, res) => {
     try{
-        const { posRepository } = await import('../redisPosition.mjs');
+        const { positionRepository } = await import('../redisPosition.mjs');
             
         console.log('Conectado a Redis');
         const bod = req.body
             
-        const position = posRepository.save(req.body)
+        const position = positionRepository.save(req.body)
         
         res.send(position)
     }catch(error){
