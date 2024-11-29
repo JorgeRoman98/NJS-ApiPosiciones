@@ -1,12 +1,12 @@
 //import { Entity, Schema } from 'redis-om'
-import pkg from 'redis-om';
-const { Entity, Schema } = pkg;
+import { Schema } from 'redis-om';
+// = pkg;
 import client from './redisOMClient.mjs'
 
-class Position extends Entity {}
+//class Position extends Entity {}
 
 client.connect()
-const posSchema = new Schema(Position,{
+const posSchema = new Schema('Position',{
   "patente": { type: 'string'},
   "fecha_hora": { type: 'string'},
   "latitud": { type: 'string'},
