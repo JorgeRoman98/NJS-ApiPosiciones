@@ -58,6 +58,7 @@
  */
 
 const express = require('express');
+const { createClient } = require('redis');
 //const posRepository = require('../redisPosition.mjs');
 //import { posRepository } from '../redisPosition.mjs';
 // import { createClient } from 'redis'
@@ -66,13 +67,9 @@ const express = require('express');
 //     url: 'redis://redis:6379'
 //   })  
 
-(async () => {
-    //const esModule = await import('./esModule.js');
-    const { createClient } = await import('redis');
-    const redis = createClient({
-        url: 'redis://redis:6379'
-    })  
-})();
+const redis = createClient({
+    url: 'redis://redis:6379'
+}) 
 
 const router = express.Router();
 
@@ -80,10 +77,8 @@ router.post('/insert', async (req, res) => {
     try{
         const { EntityId } = await import('redis-om');
         const { posRepository } = await import('../redisPosition.mjs');
-        const { createClient } = await import('redis');
-        const redis = createClient({
-            url: 'redis://redis:6379'
-        })
+        await client.connect();
+        console.log('Conectado a Redis');
         const bod = req.body
           
         album = await posRepository.save(bod)
