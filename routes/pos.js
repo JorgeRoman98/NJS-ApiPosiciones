@@ -77,9 +77,13 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/insert', async (req, res) => {
-    const { EntityId } = await import('redis-om');
-    const { posRepository } = await import('../redisPosition.mjs');
     try{
+        const { EntityId } = await import('redis-om');
+        const { posRepository } = await import('../redisPosition.mjs');
+        const { createClient } = await import('redis');
+        const redis = createClient({
+            url: 'redis://redis:6379'
+        })
         const bod = req.body
           
         album = await posRepository.save(bod)
