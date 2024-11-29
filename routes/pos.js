@@ -79,15 +79,13 @@ const router = express.Router();
 
 router.post('/insert', async (req, res) => {
     try{
-        //await client.connect();
-        //const { EntityId } = await import('redis-om');
         const { posRepository } = await import('../redisPosition.mjs');
             
         console.log('Conectado a Redis');
         const bod = req.body
             
-        const position = posRepository.createAndSave(req.body)
-        //res.json({ message: 'Posición creada', Id: album[EntityId] });
+        const position = posRepository.save(req.body)
+        
         res.send(position)
     }catch(error){
         console.error('Error al crear usuario:', error);
