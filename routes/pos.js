@@ -69,7 +69,7 @@ const router = express.Router();
 
 router.post('/insert', async (req, res) => {
     //import { EntityId } from 'redis-om'
-    const { EntityId } = require('redis-om');
+    const { EntityId } = await import('redis-om');
     try{
         const bod = req.body
           
