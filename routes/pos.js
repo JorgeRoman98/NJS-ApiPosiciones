@@ -56,10 +56,11 @@
  *          required: true
  *          descripcion: patente del vehículo a buscar.
  */
-const express = require('express');
+//const express = require('express');
 //const {posRepository} = require('../redisPosition.js');
 //import { createClient } from 'redis'
-const { posRepository } = require('../redisPosition.js');
+import * as express from "express";
+import { posRepository } from '../redisPosition.js';
 import { createClient } from 'redis'
 
 const redis = createClient({
