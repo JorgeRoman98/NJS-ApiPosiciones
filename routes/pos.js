@@ -60,10 +60,11 @@ const express = require('express');
 //const {posRepository} = require('../redisPosition.js');
 //import { createClient } from 'redis'
 const { posRepository } = require('../redisPosition.js');
+import { createClient } from 'redis'
 
-// const redis = createClient({
-//     url: 'redis://redis:6379'
-// })
+const redis = createClient({
+    url: 'redis://redis:6379'
+  })  
 
 const router = express.Router();
 
