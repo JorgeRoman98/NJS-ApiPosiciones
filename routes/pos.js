@@ -114,4 +114,18 @@ router.get('/:mov_codigo', async (req,res) => {
     res.json({ resp: redis_resp })
 })
 
+/**
+ *  @swagger
+ *      /pos/all:
+ *      get:
+ *          summary: retorna todas las posiciones.
+*/
+
+router.get('/all', async (req,res) => {
+    const { positionRepository } = await import('../redisPosition.mjs');
+    const positions = await positionRepository.search().return.all()
+
+    res.send(positions)
+})
+
 module.exports = router;
