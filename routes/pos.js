@@ -1,60 +1,50 @@
 // routes/sample.js
 /**
  *  @swagger
- *  /pos/{mov_codigo}:
- *  get:
- *      summary: retorna las posiciones de una patente.
- *      parameters:
- *        - in: path
- *          name: mov_codigo
- *          schema:
- *              type: string
- *          required: true
- *          descripcion: patente del vehículo a buscar.
- *  /pos/insert:
- *  post:
- *      summary: Returns a sample message
- *      requestBody:
- *          description: Optional description in *Markdown*
- *          required: true
- *          content:
- *              application/json:
- *                  schema: 
- *                      type: object
- *                      properties:
- *                          patente:
- *                              type: string
- *                          fecha_hora:
- *                              type: string
- *                          latitud:
- *                              type: string
- *                          longitud:
- *                              type: string
- *                          direccion:
- *                              type: string
- *                          velocidad:
- *                              type: string
- *                          estado_registro:
- *                              type: string
- *                          numero_evento:
- *                              type: string
- *                          odometro:
- *                              type: string
- *                          numero_satelites:
- *                              type: string
- *                          hdop:
- *                              type: string
- *                          edad_dato:
- *                              type: string
- *                          rut_conductor:
- *                              type: string
- *                          nombre_conductor:
- *                              type: string
- *                          opcional_1:
- *                              type: string
- *      responses:
- *          200:
- *              description: A successful response
+ *      /pos/insert:
+ *      post:
+ *          summary: Returns a sample message
+ *          requestBody:
+ *              description: Optional description in *Markdown*
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema: 
+ *                          type: object
+ *                          properties:
+ *                              patente:
+ *                                  type: string
+ *                              fecha_hora:
+ *                                  type: string
+ *                              latitud:
+ *                                  type: string
+ *                              longitud:
+ *                                  type: string
+ *                              direccion:
+ *                                  type: string
+ *                              velocidad:
+ *                                  type: string
+ *                              estado_registro:
+ *                                  type: string
+ *                              numero_evento:
+ *                                  type: string
+ *                              odometro:
+ *                                  type: string
+ *                              numero_satelites:
+ *                                  type: string
+ *                              hdop:
+ *                                  type: string
+ *                              edad_dato:
+ *                                  type: string
+ *                              rut_conductor:
+ *                                  type: string
+ *                              nombre_conductor:
+ *                                  type: string
+ *                              opcional_1:
+ *                                  type: string
+ *          responses:
+ *              200:
+ *                  description: A successful response
  */
 
 const express = require('express');
@@ -108,6 +98,20 @@ router.post('/insert', async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
   });
+
+/**
+ *  @swagger
+ *      /pos/{mov_codigo}:
+ *      get:
+ *          summary: retorna las posiciones de una patente.
+ *          parameters:
+ *            - in: path
+ *              name: mov_codigo
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              descripcion: patente del vehículo a buscar.
+*/
 
 router.get('/:mov_codigo', async (req,res) => {
     const mov_codigo = req.params.mov_codigo;
