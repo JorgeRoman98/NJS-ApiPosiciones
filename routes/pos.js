@@ -70,8 +70,10 @@ router.post('/insert', async (req, res) => {
             
         console.log('Conectado a Redis');
         const bod = req.body
+
+        const user = repository.createEntity(req.body);
             
-        const position = positionRepository.createAndSave(req.body)
+        const position = positionRepository.save(user)
         
         res.send(position)
     }catch(error){
