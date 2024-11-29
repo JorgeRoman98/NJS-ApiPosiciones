@@ -66,6 +66,14 @@ const express = require('express');
 //     url: 'redis://redis:6379'
 //   })  
 
+(async () => {
+    //const esModule = await import('./esModule.js');
+    const { createClient } = await import('redis');
+    const redis = createClient({
+        url: 'redis://redis:6379'
+    })  
+})();
+
 const router = express.Router();
 
 router.post('/insert', async (req, res) => {
