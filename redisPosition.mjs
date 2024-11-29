@@ -1,4 +1,5 @@
-import { Entity, Schema } from 'redis-om'
+//import { Entity, Schema } from 'redis-om'
+const { Entity, Schema } = await import('redis-om');
 import client from './redisOMClient.mjs'
 
 class Position extends Entity {}
