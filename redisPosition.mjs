@@ -34,7 +34,7 @@ client.connect().then(() => {
     dataStructure: 'HASH'
   })
 
-  posRepository = new Repository(posSchema, redis)
+  posRepository = new Repository(posSchema, client)
 })
 
 
