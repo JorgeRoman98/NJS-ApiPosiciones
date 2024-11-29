@@ -114,7 +114,7 @@ router.get('/:mov_codigo', async (req,res) => {
     const { positionRepository } = await import('../redisPosition.mjs');
 
     const mov_codigo = req.params.mov_codigo;
-    const redis_resp = await positionRepository.search().where('patente').equals(mov_codigo);
+    const redis_resp = await positionRepository.search().where('patente').equals(mov_codigo).return.all();
 
     res.json({ resp: redis_resp })
 })
