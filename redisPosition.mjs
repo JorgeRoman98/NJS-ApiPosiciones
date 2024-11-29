@@ -6,6 +6,7 @@ import client from './redisOMClient.mjs'
 //class Position extends Entity {}
 
 client.connect()
+
 const posSchema = new Schema('Position',{
   "patente": { type: 'string'},
   "fecha_hora": { type: 'string'},
