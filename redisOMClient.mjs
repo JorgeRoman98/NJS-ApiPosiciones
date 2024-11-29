@@ -1,5 +1,5 @@
-//import { Client } from 'redis-om'
-const { createClient } = require('redis');
+import { createClient } from 'redis'
+//const { createClient } = require('redis');
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
 /* create and open the Redis OM Client */
