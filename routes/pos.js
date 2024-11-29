@@ -64,9 +64,9 @@ const router = express.Router();
 //     },
 // }) 
 
-client.on('connect', () => {
-    console.log('Conectado a Redis');
-});
+// client.on('connect', () => {
+//     console.log('Conectado a Redis');
+// });
 
 
 // (async () => {
