@@ -48,7 +48,7 @@
  */
 
 const express = require('express');
-const { createClient } = require('redis');
+const { createClient, ClientClosedError } = require('redis');
 
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
@@ -85,7 +85,8 @@ router.post('/insert', async (req, res) => {
         const bod = req.body
           
         album = await posRepository.save(bod)
-        res.json({ message: 'Posición creada', Id: album[EntityId] });   
+        res.json({ message: 'Posición creada', Id: album[EntityId] });
+        await client.quit();
     }catch(error){
         console.error('Error al crear usuario:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
