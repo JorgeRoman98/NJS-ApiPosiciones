@@ -48,34 +48,21 @@
  */
 
 const express = require('express');
-//const { createClient, ClientClosedError } = require('redis');
-
-//import { posRepository } from '../redisOMClient.mjs'
 
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 
 const router = express.Router();
 
-// const client = createClient({
-//     legacyMode: false,
-//     url : `redis://${redisserv}:6379`,
-//     socket: {
-//         connectTimeout: 100000, // Tiempo de espera en milisegundos
-//     },
-// }) 
+let posRepository;
 
-// client.on('connect', () => {
-//     console.log('Conectado a Redis');
-// });
-
-
-// (async () => {
-//     try {
-//         await client.connect();
-//     } catch (err) {
-//         console.error('Error al conectar:', err);
-//     }
-// })();
+(async () => {
+    try {
+        const { positionRepository } = await import('../redisPosition.mjs');
+        posRepository = positionRepository;
+    } catch (err) {
+        console.error('Error al conectar:', err);
+    }
+})();
 
 router.post('/insert', async (req, res) => {
     try{
@@ -84,7 +71,7 @@ router.post('/insert', async (req, res) => {
         console.log('Conectado a Redis');
         const bod = req.body
             
-        const position = positionRepository.save(req.body)
+        const position = positionRepository.createAndSave(req.body)
         
         res.send(position)
     }catch(error){
