@@ -73,7 +73,6 @@ router.post('/insert', async (req, res) => {
 
         // const user = positionRepository.createEntity(req.body);
         // const position = positionRepository.save(user)
-        console.log(positionRepository.getClassName())
         const position = await positionRepository.createAndSave(req.body);
         
         res.send(position)
