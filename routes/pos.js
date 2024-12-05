@@ -48,41 +48,64 @@
  */
 
 const express = require('express');
+const { createClient } = require('redis');
 
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
-
 const router = express.Router();
 
-let posRepository;
-
-(async () => {
-    try {
-        const { positionRepository } = await import('../redisPosition.mjs');
-        posRepository = positionRepository;
-    } catch (err) {
-        console.error('Error al conectar:', err);
-    }
-})();
+const redisClient = createClient(`redis://${redisserv}:6379`);
+redisClient.connect().catch(err => console.error('Error al conectar a Redis:', err));
 
 router.post('/insert', async (req, res) => {
+    
+        const {
+            patente,
+            fecha_hora,
+            latitud,
+            longitud,
+            direccion,
+            velocidad,
+            estado_registro,
+            numero_evento,
+            odometro,
+            numero_satelites,
+            hdop,
+            edad_dato,
+            rut_conductor,
+            nombre_conductor,
+            opcional_1
+          } = req.body
     try{
-        const { positionRepository } = await import('../redisPosition.mjs');
-            
-        console.log('Conectado a Redis');
-        const bod = req.body
+        const primKey = `${patente};${fecha_hora};${numero_evento}`
 
-        // const user = positionRepository.createEntity(req.body);
-        // const position = positionRepository.save(user)
-        const position = await positionRepository.createAndSave(req.body);
-        
-        res.send(position)
+        const key = `objetos:${primKey}`;
+
+        await redisClient.hSet(key, {
+            patente,
+            fecha_hora,
+            latitud,
+            longitud,
+            direccion,
+            velocidad,
+            estado_registro,
+            numero_evento,
+            odometro,
+            numero_satelites,
+            hdop,
+            edad_dato,
+            rut_conductor,
+            nombre_conductor,
+            opcional_1
+          });
+
+        res.status(201).json({ message: 'Objeto almacenado', key });
+
     }catch(error){
-        console.error('Error al crear usuario:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ message: 'Error al almacenar el objeto', error: err.message });
     }
   });
 
-/**
+/*
  *  @swagger
  *      /pos/{mov_codigo}:
  *      get:
@@ -99,14 +122,14 @@ router.post('/insert', async (req, res) => {
  *              description: A successful response
 */
 
-router.get('/:mov_codigo', async (req,res) => {
-    const { positionRepository } = await import('../redisPosition.mjs');
+// router.get('/:mov_codigo', async (req,res) => {
+//     const { positionRepository } = await import('../redisPosition.mjs');
 
-    const mov_codigo = req.params.mov_codigo;
-    const redis_resp = await positionRepository.search().where('patente').equals(mov_codigo).return.all();
+//     const mov_codigo = req.params.mov_codigo;
+//     const redis_resp = await positionRepository.search().where('patente').equals(mov_codigo).return.all();
 
-    res.json({ resp: redis_resp })
-})
+//     res.json({ resp: redis_resp })
+// })
 
 /**
  *  @swagger
@@ -118,11 +141,20 @@ router.get('/:mov_codigo', async (req,res) => {
  *              description: A successful response
 */
 
-router.get('/all', async (req,res) => {
-    const { positionRepository } = await import('../redisPosition.mjs');
-    const positions = await positionRepository.search().return.all()
-
-    res.send(positions)
-})
+app.get('/all', async (_req, res) => {
+    try {
+      const keys = await redisClient.keys('objetos:*');
+      const objetos = [];
+  
+      for (const key of keys) {
+        const objeto = await redisClient.hGetAll(key);
+        objetos.push({ id: key.split(':')[1], ...objeto });
+      }
+  
+      res.status(200).json(objetos);
+    } catch (err) {
+      res.status(500).json({ message: 'Error al obtener los objetos', error: err.message });
+    }
+  });
 
 module.exports = router;
