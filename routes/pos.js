@@ -141,7 +141,7 @@ router.post('/insert', async (req, res) => {
  *              description: A successful response
 */
 
-app.get('/all', async (_req, res) => {
+router.get('/all', async (_req, res) => {
     try {
       const keys = await redisClient.keys('objetos:*');
       const objetos = [];
