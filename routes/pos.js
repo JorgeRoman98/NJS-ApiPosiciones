@@ -57,17 +57,22 @@ const redisClient = createClient(`redis://${redisserv}:6379`);
 // redisClient.connect().catch(err => console.error('Error al conectar a Redis:', err));
 
 async function connectWithRetry() {
-    let connected = false;
-    while (!connected) {
-      try {
-        await redisClient.connect();
-        connected = true;
-        console.log('Conectado a Redis');
-      } catch (err) {
-        console.error('Intentando reconectar a Redis...', err);
-        await new Promise(resolve => setTimeout(resolve, 5000));
+    if (redisClient.isOpen) {
+        console.log('Cerrando conexión previa a Redis...');
+        await redisClient.quit(); // Cierra cualquier conexión abierta
       }
-    }
+    
+      let connected = false;
+      while (!connected) {
+        try {
+          await redisClient.connect();
+          connected = true;
+          console.log('Conectado a Redis');
+        } catch (err) {
+          console.error('Intentando reconectar a Redis...', err.message);
+          await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos
+        }
+      }
   }
   
 connectWithRetry();
