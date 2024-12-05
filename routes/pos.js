@@ -54,7 +54,23 @@ const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 const router = express.Router();
 
 const redisClient = createClient(`redis://${redisserv}:6379`);
-redisClient.connect().catch(err => console.error('Error al conectar a Redis:', err));
+// redisClient.connect().catch(err => console.error('Error al conectar a Redis:', err));
+
+async function connectWithRetry() {
+    let connected = false;
+    while (!connected) {
+      try {
+        await redisClient.connect();
+        connected = true;
+        console.log('Conectado a Redis');
+      } catch (err) {
+        console.error('Intentando reconectar a Redis...', err);
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      }
+    }
+  }
+  
+connectWithRetry();
 
 router.post('/insert', async (req, res) => {
     
