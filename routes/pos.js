@@ -127,7 +127,7 @@ router.post('/insert', async (req, res) => {
  *              description: A successful response
 */
 
-app.get('/pos/:id', async (req, res) => {
+router.get('/pos/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
