@@ -53,6 +53,7 @@ const { createClient } = require('redis');
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 const router = express.Router();
 
+console.log(redisserv)
 const redisClient = createClient(url = `redis://${redisserv}:6379`);
 
 (async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
