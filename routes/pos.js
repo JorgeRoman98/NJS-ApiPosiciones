@@ -60,9 +60,9 @@ const redisClient = createClient({
 
 //createClient(`redis://${redisserv}:6379`);
 
-// (async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
+(async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
 
-// (async () => { await redisClient.connect() })();
+(async () => { await redisClient.connect() })();
 
 
 router.post('/insert', async (req, res) => {
