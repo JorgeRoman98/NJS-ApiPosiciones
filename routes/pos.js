@@ -112,29 +112,35 @@ router.post('/insert', async (req, res) => {
 
 /*
  *  @swagger
- *      /pos/{mov_codigo}:
+ *      /pos/{id}:
  *      get:
  *          summary: retorna las posiciones de una patente.
  *          parameters:
  *            - in: path
- *              name: mov_codigo
+ *              name: id
  *              schema:
  *                  type: string
  *              required: true
- *              descripcion: patente del vehículo a buscar.
+ *              descripcion: id del vehículo a buscar.
  *      responses:
  *          200:
  *              description: A successful response
 */
 
-// router.get('/:mov_codigo', async (req,res) => {
-//     const { positionRepository } = await import('../redisPosition.mjs');
+app.get('/pos/:id', async (req, res) => {
+  const { id } = req.params;
 
-//     const mov_codigo = req.params.mov_codigo;
-//     const redis_resp = await positionRepository.search().where('patente').equals(mov_codigo).return.all();
+  try {
+    const objeto = await redisClient.hGetAll(`objetos:${id}`);
+    if (!objeto) {
+      return res.status(404).json({ message: 'Objeto no encontrado' });
+    }
 
-//     res.json({ resp: redis_resp })
-// })
+    res.status(200).json(objeto);
+  } catch (err) {
+    res.status(500).json({ message: 'Error al buscar el objeto', error: err.message });
+  }
+});
 
 /**
  *  @swagger
