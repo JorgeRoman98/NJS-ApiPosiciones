@@ -56,26 +56,28 @@ const router = express.Router();
 const redisClient = createClient(`redis://${redisserv}:6379`);
 // redisClient.connect().catch(err => console.error('Error al conectar a Redis:', err));
 
-async function connectWithRetry() {    
-      let connected = false;
-      while (!connected) {
-        try {
-          if (redisClient.isOpen || redisClient.isReady) {
-            console.log('Cerrando conexión previa a Redis...');
-            await redisClient.quit(); // Cierra cualquier conexión abierta
-          }
-          console.log(`redisClient.isOpen: ${redisClient.isOpen}, redisClient.isReady: ${redisClient.isReady}`);
-          await redisClient.connect();
-          connected = true;
-          console.log('Conectado a Redis');
-        } catch (err) {
-          console.error('Intentando reconectar a Redis...', err.message);
-          await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos
-        }
-      }
-  }
+// async function connectWithRetry() {    
+//       let connected = false;
+//       while (!connected) {
+//         try {
+//           if (redisClient.isOpen || redisClient.isReady) {
+//             console.log('Cerrando conexión previa a Redis...');
+//             await redisClient.quit(); // Cierra cualquier conexión abierta
+//           }
+//           console.log(`redisClient.isOpen: ${redisClient.isOpen}, redisClient.isReady: ${redisClient.isReady}`);
+//           await redisClient.connect();
+//           connected = true;
+//           console.log('Conectado a Redis');
+//         } catch (err) {
+//           console.error('Intentando reconectar a Redis...', err.message);
+//           await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos
+//         }
+//       }
+//   }
   
-connectWithRetry();
+// connectWithRetry();
+const connectPromise = (async () => { await redisClient.connect() })();
+await connectPromise;
 
 router.post('/insert', async (req, res) => {
     
