@@ -110,7 +110,7 @@ router.post('/insert', async (req, res) => {
     }
   });
 
-/*
+/**
  *  @swagger
  *      /pos/{id}:
  *      get:
