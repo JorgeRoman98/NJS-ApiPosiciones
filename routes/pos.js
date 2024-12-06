@@ -76,8 +76,10 @@ const redisClient = createClient(`redis://${redisserv}:6379`);
 //   }
   
 // connectWithRetry();
-const connectPromise = (async () => { await redisClient.connect() })();
-await connectPromise;
+(async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
+
+(async () => { await redisClient.connect() })();
+
 
 router.post('/insert', async (req, res) => {
     
