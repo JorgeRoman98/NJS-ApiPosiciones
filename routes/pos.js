@@ -57,7 +57,7 @@ const redisClient = createClient(`redis://${redisserv}:6379`);
 // redisClient.connect().catch(err => console.error('Error al conectar a Redis:', err));
 
 async function connectWithRetry() {
-  console.log(`client.isOpen: ${client.isOpen}, client.isReady: ${client.isReady}`);
+  console.log(`redisClient.isOpen: ${redisClient.isOpen}, redisClient.isReady: ${redisClient.isReady}`);
     if (redisClient.isOpen || redisClient.isReady) {
         console.log('Cerrando conexión previa a Redis...');
         await redisClient.quit(); // Cierra cualquier conexión abierta
