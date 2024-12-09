@@ -116,7 +116,7 @@ router.post('/insert', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const { id } = req.body;
-
+  console.log(req.body)
   try {
     const objeto = await redisClient.hGetAll(`objetos:${id}`);
     if (!objeto) {
