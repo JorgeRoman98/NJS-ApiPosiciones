@@ -115,7 +115,6 @@ router.post('/insert', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(req.body)
   try {
     const objeto = await redisClient.hGetAll(`objetos:${id}`);
     if (!objeto) {
@@ -123,10 +122,8 @@ router.get('/:id', async (req, res) => {
     }
     res.status(200).json(objeto);
 
-    console.log(objeto)
   } catch (err) {
     res.status(500).json({ message: 'Error al buscar el objeto', error: err.message });
-    console.log(err.message)
   }
 });
 
@@ -135,8 +132,8 @@ router.get('/:id', async (req, res) => {
  *      /pos/all:
  *      get:
  *          summary: retorna todas las posiciones.
- *      responses:
- *          200:
+ *          responses:
+ *            200:
  *              description: A successful response
 */
 

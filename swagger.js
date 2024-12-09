@@ -7,7 +7,7 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Api pocisiones',
+      title: 'Api posiciones',
       version: '1.0.0',
       description: 'API con basePath configurado',
     },
