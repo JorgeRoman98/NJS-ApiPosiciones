@@ -52,9 +52,8 @@ const { createClient } = require('redis');
 const redisserv = process.env.REDIS_HOST || null;
 const router = express.Router();
 
+const redisClient = createClient({url : `redis://${redisserv}:6379`});
 if(redisserv){
-  const redisClient = createClient({url : `redis://${redisserv}:6379`});
-
   (async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
   
   (async () => { await redisClient.connect() })();
