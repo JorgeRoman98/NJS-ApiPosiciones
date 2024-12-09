@@ -83,7 +83,7 @@ router.post('/insert', async (req, res) => {
     try{
         const primKey = `${patente};${fecha_hora};${numero_evento}`
 
-        const key = `objetos:${primKey}`;
+        const key = `objetos:${primKey.replace(' ', '_')}`;
 
         await redisClient.hSet(key, req.body);
 
