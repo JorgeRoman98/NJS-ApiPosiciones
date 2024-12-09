@@ -85,23 +85,7 @@ router.post('/insert', async (req, res) => {
 
         const key = `objetos:${primKey}`;
 
-        await redisClient.hSet(key, {
-            patente,
-            fecha_hora,
-            latitud,
-            longitud,
-            direccion,
-            velocidad,
-            estado_registro,
-            numero_evento,
-            odometro,
-            numero_satelites,
-            hdop,
-            edad_dato,
-            rut_conductor,
-            nombre_conductor,
-            opcional_1
-          });
+        await redisClient.hSet(key, req.body);
 
         res.status(201).json({ message: 'Objeto almacenado', key });
 
@@ -130,16 +114,17 @@ router.post('/insert', async (req, res) => {
 router.get('/pos/:id', async (req, res) => {
   const { id } = req.params;
 
-  try {
-    const objeto = await redisClient.hGetAll(`objetos:${id}`);
-    if (!objeto) {
-      return res.status(404).json({ message: 'Objeto no encontrado' });
-    }
-
-    res.status(200).json(objeto);
-  } catch (err) {
-    res.status(500).json({ message: 'Error al buscar el objeto', error: err.message });
+  const objeto = await redisClient.hGetAll(`objetos:${id}`);
+  if (!objeto) {
+    return res.status(404).json({ message: 'Objeto no encontrado' });
   }
+  res.status(200).json(objeto);
+
+  // try {
+    
+  // } catch (err) {
+  //   res.status(500).json({ message: 'Error al buscar el objeto', error: err.message });
+  // }
 });
 
 /**
