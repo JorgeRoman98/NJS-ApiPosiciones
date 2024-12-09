@@ -99,20 +99,23 @@ router.post('/insert', async (req, res) => {
  *      /pos/{id}:
  *      get:
  *          summary: retorna las posiciones de una patente.
- *          parameters:
- *            - in: path
- *              name: id
- *              schema:
- *                  type: string
+ *          requestBody:
+ *              description: Optional description in *Markdown*
  *              required: true
- *              descripcion: id del vehículo a buscar.
+ *              content:
+ *                  application/json:
+ *                      schema: 
+ *                          type: object
+ *                          properties:
+ *                              id:
+ *                                  type: string
  *      responses:
  *          200:
  *              description: A successful response
 */
 
-router.get('/pos/:id', async (req, res) => {
-  const { id } = req.params;
+router.get('/pos', async (req, res) => {
+  const { id } = req.body;
 
   const objeto = await redisClient.hGetAll(`objetos:${id}`);
   if (!objeto) {
