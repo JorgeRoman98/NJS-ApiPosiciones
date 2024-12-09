@@ -112,6 +112,10 @@ router.post('/insert', async (req, res) => {
  *      responses:
  *          200:
  *              description: A successful response
+ *          404:
+ *              description: Object not found
+ *          500:
+ *              description: Error while searching
 */
 
 router.get('/', async (req, res) => {
