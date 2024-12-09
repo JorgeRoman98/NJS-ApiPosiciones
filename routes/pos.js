@@ -1,11 +1,10 @@
-// routes/sample.js
 /**
  *  @swagger
  *      /pos/insert:
  *      post:
- *          summary: Returns a sample message
+ *          summary: Insertar una posición en la bdd
  *          requestBody:
- *              description: Optional description in *Markdown*
+ *              description: Mensaje parseado
  *              required: true
  *              content:
  *                  application/json:
@@ -53,7 +52,6 @@ const { createClient } = require('redis');
 const redisserv = process.env.REDIS_HOST || '192.168.2.40';
 const router = express.Router();
 
-console.log(redisserv)
 const redisClient = createClient({url : `redis://${redisserv}:6379`});
 
 (async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
@@ -98,9 +96,9 @@ router.post('/insert', async (req, res) => {
  *  @swagger
  *      /pos:
  *      get:
- *          summary: retorna las posiciones de una patente.
+ *          summary: retorna una posición determinada por la patente, fecha y hora y el número de evento.
  *          requestBody:
- *              description: Optional description in *Markdown*
+ *              description: Id de la posición insertada.
  *              required: true
  *              content:
  *                  application/json:
