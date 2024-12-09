@@ -97,16 +97,13 @@ router.post('/insert', async (req, res) => {
  *      /pos:
  *      get:
  *        summary: retorna una posición determinada por la patente, fecha y hora y el número de evento.
- *        requestBody:
- *          description: Id de la posición insertada.
+ *        parameters:
+ *          - in: path
+ *          name: userId
+ *          schema:
+ *            type: integer
  *          required: true
- *          content:
- *            application/json:
- *              schema: 
- *                type: object
- *                properties:
- *                  id:
- *                    type: string
+ *          description: Numeric ID of the user to get
  *        responses:
  *          200:
  *              description: A successful response
@@ -116,11 +113,11 @@ router.post('/insert', async (req, res) => {
  *              description: Error while searching
 */
 
-router.get('/', async (req, res) => {
-  //const { id } = req.body;
+router.get('/{id}', async (req, res) => {
+  const { id } = req.params;
   console.log(req.body)
   try {
-    const objeto = await redisClient.hGetAll(`objetos:${req.body.id}`);
+    const objeto = await redisClient.hGetAll(`objetos:${id}`);
     if (!objeto) {
       return res.status(404).json({ message: 'Objeto no encontrado' });
     }
