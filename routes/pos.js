@@ -88,7 +88,7 @@ router.post('/insert', async (req, res) => {
 
         res.status(201).json({ message: 'Objeto almacenado', key });
 
-    }catch(error){
+    }catch(err){
         res.status(500).json({ message: 'Error al almacenar el objeto', error: err.message });
     }
   });
