@@ -54,9 +54,9 @@ const router = express.Router();
 
 const redisClient = createClient({url : `redis://${redisserv}:6379`});
 
-(async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
+// (async () => {  redisClient.on('error', (err) => console.log('Redis Client Error', err)); })();
 
-(async () => { await redisClient.connect() })();
+// (async () => { await redisClient.connect() })();
 
 
 router.post('/insert', async (req, res) => {
@@ -96,18 +96,18 @@ router.post('/insert', async (req, res) => {
  *  @swagger
  *      /pos:
  *      get:
- *          summary: retorna una posición determinada por la patente, fecha y hora y el número de evento.
- *          requestBody:
- *              description: Id de la posición insertada.
- *              required: true
- *              content:
- *                  application/json:
- *                      schema: 
- *                          type: object
- *                          properties:
- *                              id:
- *                                  type: string
- *      responses:
+ *        summary: retorna una posición determinada por la patente, fecha y hora y el número de evento.
+ *        requestBody:
+ *          description: Id de la posición insertada.
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema: 
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: string
+ *        responses:
  *          200:
  *              description: A successful response
  *          404:
