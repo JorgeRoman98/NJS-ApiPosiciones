@@ -94,12 +94,12 @@ router.post('/insert', async (req, res) => {
 
 /**
  *  @swagger
- *      /pos:
+ *      /pos/{id}:
  *      get:
  *        summary: retorna una posición determinada por la patente, fecha y hora y el número de evento.
  *        parameters:
  *          - in: path
- *          name: userId
+ *          name: id
  *          schema:
  *            type: integer
  *          required: true
