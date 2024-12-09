@@ -115,10 +115,10 @@ router.post('/insert', async (req, res) => {
 */
 
 router.get('/', async (req, res) => {
-  const { id } = req.body;
+  //const { id } = req.body;
   console.log(req.body)
   try {
-    const objeto = await redisClient.hGetAll(`objetos:${id}`);
+    const objeto = await redisClient.hGetAll(`objetos:${req.body.id}`);
     if (!objeto) {
       return res.status(404).json({ message: 'Objeto no encontrado' });
     }
