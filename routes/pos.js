@@ -99,11 +99,11 @@ router.post('/insert', async (req, res) => {
  *        summary: retorna una posición determinada por la patente, fecha y hora y el número de evento.
  *        parameters:
  *          - in: path
- *          name: id
- *          schema:
- *            type: integer
- *          required: true
- *          description: Numeric ID of the user to get
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Numeric ID of the user to get
  *        responses:
  *          200:
  *              description: A successful response
